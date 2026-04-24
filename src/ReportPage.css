@@ -1,0 +1,100 @@
+.report-screen {
+  min-height: 100vh;
+  background-color: rgb(214, 243, 240);
+  padding: 20px 0;
+}
+
+.report-page {
+  width: min(90vw, 420px);
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.report-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.report-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.back-button {
+  position: relative;
+  z-index: 1;
+}
+
+.rate-message {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.report-card {
+  background-color: rgb(245, 253, 255);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.report-card h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.report-card p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.line-chart-wrap {
+  width: 100%;
+}
+
+.line-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.axis-line {
+  stroke: #c8d2e3;
+  stroke-width: 1.5;
+}
+
+.chart-line {
+  stroke: #0bc8d5;
+  stroke-width: 2.5;
+}
+
+.chart-dot {
+  fill: #0bd7e6;
+}
+
+.axis-text {
+  font-size: 10px;
+  fill: #6b7280;
+}
+
+.chart-caption {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.advice-text {
+  white-space: pre-wrap;
+  word-break: keep-all;
+  line-height: 1.6;
+}

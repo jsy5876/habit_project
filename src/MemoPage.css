@@ -1,0 +1,110 @@
+.memo-screen {
+    min-height: 100vh;
+    background-color: rgb(214, 243, 240);
+    padding: 20px 0;
+}
+
+.memo-page {
+    width: min(90vw, 420px);
+    margin: 0 auto;
+    padding: 20px 20px 80px;
+    box-sizing: border-box;
+    background-color: white;
+    min-height: 100dvh;
+}
+
+.memo-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+
+.memo-content {
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+}
+
+.memo-content h3 {
+    text-align: center;
+}
+
+.section-title {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.habit-section-title {
+    margin-top: 24px;
+}
+
+.memo-textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: none;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    background-color: #f1fafd;
+}
+
+.memo-view-box {
+    min-height: 110px;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: #f1fafd;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.habit-check-list,
+.habit-view-box {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 14px;
+    background-color: #f1fafd;
+}
+
+.habit-check-item,
+.habit-view-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+.habit-empty-text {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.memo-bottom-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.save-button,
+.edit-button,
+.back-button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #f1fafd;
+}
+
+.save-button:hover,
+.edit-button:hover,
+.back-button:hover {
+    background-color: rgb(206, 240, 241);
+}

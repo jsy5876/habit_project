@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.splash-screen,
+.main-screen,
+.login-screen {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.splash-screen {
+  background-color: rgb(214, 243, 240);
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: 900;
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
+  color: darkslategrey;
+}
+
+.login-screen {
+  gap: 10px;
+  background: linear-gradient(180deg, white 0%, rgb(205, 241, 238) 100%);
+  padding: 20px;
+  text-align: center;
+  color: darkslategrey;
+}
+
+.login-screen h2 {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.login-button {
+  width: min(90vw, 260px);
+  height: 45px;
+  border: 1px solid rgba(44, 130, 187, 0.711);
+  border-radius: 10px;
+  background-color: rgba(44, 130, 187, 0.711);
+  color: white;
+  cursor: pointer;
+}
+
+.main-screen {
+  background-color: lightsteelblue;
+}
+
+.app-container {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rgb(214, 243, 240);;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
