@@ -84,6 +84,13 @@
     font-weight: bold;
 }
 
+.calendar-cell.future {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f7f7f7;
+  color: #999;
+}
+
 .date-picker-popup {
     position: absolute;
     top: 70px;

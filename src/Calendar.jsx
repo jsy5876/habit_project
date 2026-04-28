@@ -49,6 +49,19 @@ function Calendar({
 
   const today = new Date();
 
+  const isFutureDate = (day) => {
+    if (!day) return false;
+
+    const cellDate = new Date(year, month, day);
+    const todayStart = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+
+    return cellDate > todayStart;
+  }
+
   const isToday = (day) => {
     return (
       day &&
@@ -156,8 +169,14 @@ function Calendar({
               key={index}
               className={`calendar-cell ${day ? "active" : "empty"} ${
                 isToday(day) ? "today" : ""
-              } ${hasRecord ? "has-record" : ""}`}
-              onClick={() => day && onDateClick(new Date(year, month, day))}
+              } ${hasRecord ? "has-record" : ""} ${
+                isFutureDate(day) ? "future" : ""
+              }`}
+              onClick={() => {
+                if (day && !isFutureDate(day)) {
+                  onDateClick(new Date(year, month, day));
+                }
+              }}
             >
               {day}
               {hasRecord && <span className="record-dot"></span>}

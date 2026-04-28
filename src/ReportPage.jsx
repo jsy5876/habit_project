@@ -11,6 +11,10 @@ const MIN_RECORDED_DAYS = 7;
 const CLIENT_DAILY_LIMIT = 5;
 const COOLDOWN_SECONDS = 10;
 
+function getAdviceKey(year, month) {
+    return `ai-advice-${year}-${month + 1}`;
+}
+
 function getTodayKey() {
     return `ai-advice-count-${formatDateKey(new Date())}`;
 }
@@ -120,6 +124,18 @@ function ReportPage({ currentDate, records, habits, onBack }) {
     const [cooldown, setCooldown] = useState(0);
     const [clientCount, setClientCount] = useState(() => getClientDailyCount());
 
+    useEffect(() => {
+        const savedAdvice = localStorage.getItem(
+            getAdviceKey(report.year, report.month)
+        );
+
+        if (savedAdvice) {
+            setAiAdvice(savedAdvice);
+        } else {
+            setAiAdvice("");
+        }
+    }, [report.year, report.month]);
+
     const hasEnoughData =
         habits.length > 0 && report.recordedDays >= MIN_RECORDED_DAYS;
 
@@ -177,7 +193,13 @@ function ReportPage({ currentDate, records, habits, onBack }) {
             return;
         }
 
-        setAiAdvice(data.advice || "");
+        const newAdvice = data.advice || "";
+        setAiAdvice(newAdvice);
+        localStorage.setItem(
+            getAdviceKey(report.year, report.month),
+            newAdvice
+        );
+
         const nextCount = increaseClientDailyCount();
         setClientCount(nextCount);
         setCooldown(COOLDOWN_SECONDS);
@@ -240,7 +262,9 @@ function ReportPage({ currentDate, records, habits, onBack }) {
                             clientCount >= CLIENT_DAILY_LIMIT
                         }
                     > 
-                        {loadingAdvice
+                        {!hasEnoughData
+                            ? `AI 조언은 최소 ${MIN_RECORDED_DAYS}일 이상 기록한 뒤 사용할 수 있어요.`
+                            :loadingAdvice
                             ? "조언 생성 중..."
                             : cooldown > 0
                             ? `${cooldown}초 후 다시 시도`
