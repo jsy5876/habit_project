@@ -1,6 +1,25 @@
 const MIN_RECORDED_DAYS = 7;
 
+function getFallbackAdvice({
+  bestHabit,
+  worstHabit,
+}) {
+  if (bestHabit || worstHabit) {
+    return `이번 달 가장 잘한 습관은 ${
+      bestHabit || "아직 없어요"},
+    가장 어려웠던 습관은 ${
+      worstHabit || "아직 없어요"}예요. ${
+      worstHabit || "어려운 습관"}은 목표를 더 작게 나눠서 시도해보세요. 꾸준함이 가장 중요하답니다!`
+  }
+
+  return "처음부터 완벽하게 하려고 하지 않아도 괜찮아요. 하루 한 번 기록하는 습관부터 천천히 시작해보세요!";
+}
+
 export async function POST(request) {
+
+  let bestHabit = "";
+  let worstHabit = "";
+
   try {
     const body = await request.json();
 
@@ -9,11 +28,14 @@ export async function POST(request) {
       month,
       recordedDays,
       successRate,
-      bestHabit,
-      worstHabit,
+      bestHabit: parsedBestHabit,
+      worstHabit: parsedWorstHabit,
       weeklyTrend,
       habits,
     } = body;
+
+    bestHabit = parsedBestHabit;
+    worstHabit = parsedWorstHabit;
 
     if (!Array.isArray(habits)) {
       return Response.json(
@@ -85,16 +107,28 @@ export async function POST(request) {
     if (!geminiResponse.ok) {
         if (geminiResponse.status === 503) {
             return Response.json(
-            { error: "현재 AI 요청이 많아요. 잠시 후 다시 시도해주세요." },
+            { error: "현재 AI 요청이 많아요. 잠시 후 다시 시도해주세요.",
+              advice: getFallbackAdvice({
+                bestHabit,
+                worstHabit,
+              }),
+              fallback: true,
+            },
             { status: 503 }
-            );
+          );
         }
 
         if (geminiResponse.status === 429) {
             return Response.json(
-            { error: "AI 사용 한도를 초과했어요. 30초 후 다시 시도해주세요." },
+            { error: "AI 사용 한도를 초과했어요. 30초 후 다시 시도해주세요.",
+              advice: getFallbackAdvice({
+                bestHabit,
+                worstHabit,
+              }),
+              fallback: true,
+            },
             { status: 429 }
-            );
+          );
         }
 
         return Response.json(
@@ -112,7 +146,13 @@ export async function POST(request) {
     });
   } catch (error) {
     return Response.json(
-      { error: error.message || "AI 조언 생성 실패" },
+      { error: error.message || "AI 조언 생성 실패",
+        advice: getFallbackAdvice({
+          bestHabit,
+            worstHabit,
+        }),
+        fallback: true,
+      },
       { status: 500 }
     );
   }
