@@ -1,16 +1,99 @@
-# React + Vite
+# Habit Project - 습관 모아
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+하루 습관을 기록하고, 월간 통계와 AI 조언을 확인할 수 있는 습관 관리 웹앱입니다.  
+캘린더 기반으로 날짜별 기록을 남기고, 월간 성공률·주간 추세를 확인할 수 있으며 기록 데이터를 바탕으로 AI 피드백을 제공하도록 구현했습니다.
 
-Currently, two official plugins are available:
+## 링크
+- https://habit-project-bay.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## GitHub
+- https://github.com/jsy5876/habit_project
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 주요 기능
 
-## Expanding the ESLint configuration
+- 습관 등록 및 수정
+- 날짜별 메모 / 습관 체크 기록
+- 월간 성공률 및 기록 일수 확인
+- 최근 7일 추세 확인
+- 월간 습관 실행 추이 그래프 제공
+- 기록 데이터를 바탕으로 AI 조언 생성
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 기술 스택
+
+- **Frontend**: React, Vite
+- **Styling**: CSS
+- **Storage**: localStorage
+- **Deployment**: Vercel
+- **AI API**: Gemini API (REST 방식 연동)
+
+---
+
+## 구현 포인트
+
+**1. 코드 구조 분리**
+- 처음에는 날짜 처리, 통계 계산, 저장 로직이 컴포넌트 내부에 섞여 있었지만 유지보수성과 가독성을 높이기 위해 utils 폴더로 분리했습니다.
+
+- date.js: 날짜 키 생성
+- report.js: 월간 통계 계산
+- storage.js: localStorage 관련 로직
+
+**2. 월간 성공률 계산 개선**
+- 현재 달의 남은 날짜까지 분모에 포함되던 문제를 수정해, 오늘 날짜까지만 반영하도록 개선했습니다.
+
+**3. AI 조언 기능 구현**
+- 월간 기록 데이터를 바탕으로 AI 조언을 생성하는 기능을 구현했습니다.
+
+**4. 예외 처리 및 사용자 경험 개선**
+- 기록 데이터가 부족할 경우 호출 제한, localStorage 기반 일일 호출 횟수 제한, 버튼 연타 방지용 cooldown을 적용해 사용자 경험을 개선했습니다.
+
+---
+
+## 문제 해결 과정 
+**1. /api/advice 404 오류** 
+- 초기에는 Vite 개발 서버만 실행하여 API 라우트가 동작하지 않았습니다. 이후 vercel dev를 사용해 로컬에서 API 함수까지 함께 테스트하도록 수정했습니다.
+
+**2.Gemini SDK 인증 문제** 
+- Gemini SDK 사용 시 API 키가 정상적으로 전달되지 않는 오류가 발생했습니다. SDK 방식 대신 REST 방식으로 변경하여 x-goog-api-key 헤더에 API 키를 직접 포함하여 요청하도록 수정했습니다.
+서버에서만 API 요청을 수행하도록 구조를 분리했습니다.
+
+**3. 외부 AI 서버 혼잡** 
+- Gemini API 사용 중 503, 429 오류가 발생했습니다. 
+대응 방법으로 503 오류 시 서버 혼잡 안내 문구 제공, 429 오류 시 사용량 제한 안내 문구를 제공했습니다.
+
+---
+
+## 실행 방법
+```bash
+npm install
+npm run dev
+vercel dev
+```
+
+
+## 환경변수
+- `.env` 파일 또는 Vercel Environment Variables에 아래 키를 설정해야 합니다.
+
+```env
+GEMINI_API_KEY=your_api_key
+```
+
+---
+
+## 아쉬운 점
+- 현재는 게스트 기반으로만 동작하며 사용자 계정 기능은 없음.
+- 데이터 저장이 localStorage 기반이라 기기 간 동기화는 지원하지 않음.
+- AI 서버 상태에 따라 응답이 불안정할 수 있음.
+
+## 향후 개선 방향
+- 로그인 기능 추가
+- 백엔드/DB 연동으로 사용자별 데이터 저장
+- 통계 시각화 개선
+- AI 조언 히스토리 저장 기능
+- 주간/월간 리포트 UI 개선
+
+## 회고
+이번 프로젝트를 통해 단순한 UI 구현을 넘어서 상태 관리, 로컬 저장, 통계 계산, 외부 API 연동, 배포 및 환경변수 관리까지 경험할 수 있었습니다. 특히 AI 기능 연동 과정에서 발생한 문제를 단계적으로 분리하고 해결하면서 디버깅 과정과 문제 해결 능력의 중요성을 크게 느꼈습니다.
