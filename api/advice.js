@@ -6,10 +6,9 @@ function getFallbackAdvice({
 }) {
   if (bestHabit || worstHabit) {
     return `이번 달 가장 잘한 습관은 ${
-      bestHabit || "아직 없어요"},
-    가장 어려웠던 습관은 ${
+      bestHabit || "아직 없어요"}, 가장 어려웠던 습관은 ${
       worstHabit || "아직 없어요"}예요. ${
-      worstHabit || "어려운 습관"}은 목표를 더 작게 나눠서 시도해보세요. 꾸준함이 가장 중요하답니다!`
+      worstHabit || "어려운 습관"}는 목표를 더 작게 나눠서 시도해보세요. 꾸준함이 가장 중요하답니다!`
   }
 
   return "처음부터 완벽하게 하려고 하지 않아도 괜찮아요. 하루 한 번 기록하는 습관부터 천천히 시작해보세요!";
@@ -100,6 +99,7 @@ export async function POST(request) {
         }),
       }
     );
+
 
     const geminiData = await geminiResponse.json();
 

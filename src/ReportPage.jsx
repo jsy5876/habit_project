@@ -190,6 +190,16 @@ function ReportPage({ currentDate, records, habits, onBack }) {
 
         if (!response.ok) {
             setAiError(data.error || "AI 조언을 불러오지 못했어요.");
+
+            if (data.advice) {
+                setAiAdvice(data.advice);
+
+                localStorage.setItem(
+                    getAdviceKey(report.year, report.month),
+                    data.advice
+                );
+            }
+
             return;
         }
 
